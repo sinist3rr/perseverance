@@ -1,0 +1,30 @@
+<html>
+  <head>
+    <style type="text/css">
+      body {
+        background: black;
+        color: white;
+      }
+      div.container {
+        max-width: 800px;
+        margin: 100px auto;
+        border: 2px solid #99857A;
+        background: #E27B58;
+        padding: 10px;
+        text-align: center;
+      }
+      h4 {
+        text-transform: uppercase;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h4>Name: {{name}}</h4>
+      <h4>Launch Date: {{launch}} | Landing Date: {{landing}}</h4>
+      <h4>Status: {{status}}</h4>
+      <img style="max-width: 750px; height: auto; border:1px solid black; " src="{{url}}" />
+      <p><small>Courtesy: <a href="https://mars.nasa.gov/mars2020/multimedia/images/">NASA</a></small></p>
+    </div>
+  </body>
+</html>

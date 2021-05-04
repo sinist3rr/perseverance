@@ -3,7 +3,6 @@ pipeline {
     stages {
         stage('Build & Test') {
             agent {
-              label "docker && linux"
               docker 'python:3.6.1'
             }
             steps {

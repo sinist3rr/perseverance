@@ -5,7 +5,7 @@ from flask import Flask, render_template
 app = Flask(__name__)
 
 
-rover_url = 'https://api.nasa.gov/mars-photos/api/v1/rovers/perseverance/photos'  # noqa: E501
+rover_url = 'https://api.nasa.gov/mars-photos/api/v1/rovers/perseverance/photos' 
 CAM = 'EDL_PUCAM1'
 API_KEY = 'rC67gPuZP85lEBlsiS7VhIz2fhMp1YLEmL54EDwe'
 

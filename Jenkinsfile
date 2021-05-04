@@ -3,13 +3,15 @@ pipeline {
     stages {
         stage('Build & Test') {
             agent {
+              label "docker && linux"
               docker 'python:3.6.1'
             }
             steps {
-                echo 'Running build automation'
+              withEnv(["HOME=${env.WORKSPACE}"]) {
                 sh 'pip install -r requirements.txt'
                 sh 'flake8 app/ --exit-zero --output-file flake8-output.txt'
                 sh 'flake8_junit flake8-output.txt flake8-output.xml'
+              }
             }
         }
 

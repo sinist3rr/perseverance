@@ -5,7 +5,7 @@ pipeline {
             agent {
               docker {
                     image "python:3.6.1"
-                    args "-e PATH=/usr/local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/var/lib/jenkins/workspace/flask_pipe/.local/"
+                    args "-e PATH=/usr/local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/var/lib/jenkins/workspace/flask_pipe/.local/lib/python3.6/site-packages"
               }
             }
             steps {

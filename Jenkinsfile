@@ -4,7 +4,7 @@ pipeline {
         stage('Build & Test') {
             agent {
               docker {
-                    image 'python:3.7.2'
+                    image 'python:3.6.12-alpine'
                     args '-u root:root'
               }
             }

@@ -5,16 +5,13 @@ pipeline {
             agent {
               docker {
                     image "python:3.6.1"
-                    args "-e PATH=/usr/local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/var/lib/jenkins/workspace/flask_pipe/.local/lib/python3.6/site-packages"
               }
             }
             steps {
-              withEnv(["HOME=${env.WORKSPACE}"]) {
-                sh 'pip install -r requirements.txt --user'
+                sh 'pip install -r requirements.txt'
                 sh 'env'
                 sh 'flake8 app/ --exit-zero --output-file flake8-output.txt'
                 sh 'flake8_junit flake8-output.txt flake8-output.xml'
-              }
             }
         }
 

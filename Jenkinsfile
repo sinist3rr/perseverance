@@ -15,7 +15,7 @@ pipeline {
 
         stage('Push Image to ECR') {
             steps {
-                echo 'Running image push'
+                echo 'Running docker image push'
             }
         }
 

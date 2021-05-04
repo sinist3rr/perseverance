@@ -13,7 +13,11 @@ pipeline {
                 sh 'flake8 app/ --exit-zero --output-file flake8-output.txt'
                 sh 'flake8_junit flake8-output.txt flake8-output.xml'
             }
-        }
+            post {
+               always {
+                       junit 'flake8-output.xml'
+               }
+            }
 
         stage('Build Docker Image') {
             agent any

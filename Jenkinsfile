@@ -15,9 +15,10 @@ pipeline {
             }
             post {
                always {
-                       junit 'flake8-output.xml'
+                   junit 'flake8-output.xml'
                }
             }
+        }
 
         stage('Build Docker Image') {
             agent any

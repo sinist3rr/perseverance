@@ -21,7 +21,7 @@ pipeline {
 
         stage('Deploy in ECS') {
             steps {
-                echo 'Running image deploy'
+                echo 'Running docker image deploy'
             }
         }
     }

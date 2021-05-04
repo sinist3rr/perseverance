@@ -8,9 +8,7 @@ pipeline {
             steps {
               withEnv(["HOME=${env.WORKSPACE}"]) {
                 sh 'pip install -r requirements.txt --user'
-                sh 'ls -al'
-                sh 'pip list'
-                sh 'which flake8'
+                sh 'pip show -f flake8'
                 sh 'flake8 app/ --exit-zero --output-file flake8-output.txt'
                 sh 'flake8_junit flake8-output.txt flake8-output.xml'
               }

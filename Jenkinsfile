@@ -40,6 +40,7 @@ pipeline {
         }
     }
     post {
+        agent any
         always {
             cleanWs()
         }

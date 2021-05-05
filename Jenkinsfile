@@ -9,6 +9,8 @@ pipeline {
               }
             }
             steps {
+                sh 'python -m venv .venv'
+                sh '. .venv/bin/activate'
                 sh 'pip install -r requirements.txt'
                 sh 'flake8 app/ --exit-zero --output-file flake8-output.txt'
                 sh 'flake8_junit flake8-output.txt flake8-output.xml'

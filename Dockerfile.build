@@ -2,13 +2,11 @@ FROM python:3.6.12-alpine
 
 ENV USER=jenkins
 ENV UID=995
-ENV GID=993
 
 RUN adduser \
     --disabled-password \
     --gecos "" \
     --home "$(pwd)" \
-    --ingroup "$USER" \
     --no-create-home \
     --uid "$UID" \
     "$USER"

@@ -2,11 +2,7 @@ pipeline {
     agent none
     stages {
         stage('Build & Test') {
-            agent {
-              dockerfile {
-                    label 'docker'
-              }
-            }
+            agent { dockerfile true }
             steps {
                 sh 'pip install -r requirements.txt'
                 sh 'flake8 app/ --exit-zero --output-file flake8-output.txt'

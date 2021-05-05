@@ -1,5 +1,6 @@
 flake8==3.9.1
 flake8-junit-report==2.1.0
+xmlrunner==1.7.7
 Flask==1.1.2
 gunicorn==20.1.0
 Jinja2==2.11.3

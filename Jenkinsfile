@@ -40,9 +40,10 @@ pipeline {
         }
     }
     post {
-        agent any
         always {
+          node('master') {
             cleanWs()
+          }
         }
     }
 }

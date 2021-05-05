@@ -1,5 +1,17 @@
 FROM python:3.6.12-alpine
-RUN adduser -u 995 -s /bin/bash jenkins
+
+ENV USER=jenkins
+ENV UID=995
+ENV GID=993
+
+RUN adduser \
+    --disabled-password \
+    --gecos "" \
+    --home "$(pwd)" \
+    --ingroup "$USER" \
+    --no-create-home \
+    --uid "$UID" \
+    "$USER"
 WORKDIR /app
 COPY requirements.txt /app/requirements.txt
 RUN pip3 install --no-cache-dir -r requirements.txt

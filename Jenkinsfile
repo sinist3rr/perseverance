@@ -40,7 +40,12 @@ pipeline {
         stage('Push Image to ECR') {
             agent any
             steps {
-                echo 'Running docker image push'
+              script {
+                withAWS(region: '${AWS_ECR_REGION}', credentials: 'aws_ecr') {
+                  sh "${ecrLogin()}"
+                  docker.image("${AWS_ECR_URL}:${BUILD_NUMBER}").push()
+                }
+              }
             }
         }
 

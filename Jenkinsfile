@@ -41,7 +41,7 @@ pipeline {
             agent any
             steps {
               script {
-                withAWS(region: '${AWS_ECR_REGION}', credentials: 'aws_ecr') {
+                withAWS(region: 'eu-west-3', credentials: 'aws_ecr') {
                   sh "${ecrLogin()}"
                   docker.image("${AWS_ECR_URL}:${BUILD_NUMBER}").push()
                 }

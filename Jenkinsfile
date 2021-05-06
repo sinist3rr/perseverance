@@ -42,7 +42,7 @@ pipeline {
             steps {
               script {
                 withAWS(region: "${AWS_ECR_REGION}", credentials: 'aws_ecr') {
-                  sh "${ecrLogin()}"
+                  sh('#!/bin/sh -e\n' + "${ecrLogin()}") // hide logging
                   docker.image("${AWS_ECR_URL}:${BUILD_NUMBER}").push()
                 }
               }

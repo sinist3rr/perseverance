@@ -1,5 +1,16 @@
 pipeline {
     agent none
+    environment {
+        AWS_ECR_REGION = 'eu-west-3'
+        AWS_ECR_URL = '466897917695.dkr.ecr.eu-west-3.amazonaws.com/python-flask-app-production-ecr'
+        AWS_ECS_SERVICE = 'python-flask-app-production-ecs-service'
+        AWS_ECS_TASK_DEFINITION = 'python-flask-app-task'
+        AWS_ECS_COMPATIBILITY = 'FARGATE'
+        AWS_ECS_NETWORK_MODE = 'awsvpc'
+        AWS_ECS_CPU = '256'
+        AWS_ECS_MEMORY = '512'
+        AWS_ECS_CLUSTER = 'python-flask-app-production-cluster'
+    }
     stages {
         stage('Build & Test') {
             agent {
@@ -9,7 +20,6 @@ pipeline {
             }
             steps {
                 sh 'python tests.py'
-                sh 'flake8 app/ --exit-zero --output-file flake8-output.txt'
             }
             post {
                always {
@@ -21,7 +31,9 @@ pipeline {
         stage('Build Docker Image') {
             agent any
             steps {
-                echo 'Running docker image build'
+              script {
+                  docker.build('${AWS_ECR_URL}:${BUILD_NUMBER}')
+              }
             }
         }
 

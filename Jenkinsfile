@@ -60,6 +60,7 @@ pipeline {
         always {
           node('master') {
             cleanWs()
+            sh "docker rmi ${AWS_ECR_URL}:${BUILD_NUMBER}"
           }
         }
     }

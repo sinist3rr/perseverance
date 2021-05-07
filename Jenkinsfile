@@ -5,10 +5,6 @@ pipeline {
         AWS_ECR_URL = '466897917695.dkr.ecr.eu-west-3.amazonaws.com/python-flask-app-production-ecr'
         AWS_ECS_SERVICE = 'python-flask-app-production-ecs-service'
         AWS_ECS_TASK_DEFINITION = 'python-flask-app-task'
-        AWS_ECS_COMPATIBILITY = 'FARGATE'
-        AWS_ECS_NETWORK_MODE = 'awsvpc'
-        AWS_ECS_CPU = '256'
-        AWS_ECS_MEMORY = '512'
         AWS_ECS_CLUSTER = 'python-flask-app-production-cluster'
     }
     stages {
@@ -43,7 +39,7 @@ pipeline {
               script {
                 withAWS(region: "${AWS_ECR_REGION}", credentials: 'aws_ecr') {
                   sh('#!/bin/sh -e\n' + "${ecrLogin()}") // hide logging
-                  docker.image("${AWS_ECR_URL}:${BUILD_NUMBER}").push()
+                  docker.image("${AWS_ECR_URL}:${BUILD_NUMBER}").push('latest')
                 }
               }
             }
@@ -52,7 +48,11 @@ pipeline {
         stage('Deploy in ECS') {
             agent any
             steps {
-                echo 'Running docker image deploy'
+              script {
+                withAWS(region: "${AWS_ECR_REGION}", credentials: 'aws_ecr') {
+                  sh("aws ecs update-service --cluster ${AWS_ECS_CLUSTER} --service ${AWS_ECS_SERVICE} --force-new-deployment")
+               }
+              }
             }
         }
     }

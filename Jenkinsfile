@@ -49,9 +49,7 @@ pipeline {
             steps {
               script {
                 withAWS(region: "${AWS_ECR_REGION}", credentials: 'aws_ecr') {
-                  def updateService = "aws ecs update-service --cluster ${AWS_ECS_CLUSTER} --service ${AWS_ECS_SERVICE} --force-new-deployment"
-                  def runUpdateService = sh(returnStdout: true, script: updateService)
-                  // sh("aws ecs update-service --cluster ${AWS_ECS_CLUSTER} --service ${AWS_ECS_SERVICE} --force-new-deployment")
+                  sh("aws ecs update-service --cluster ${AWS_ECS_CLUSTER} --service ${AWS_ECS_SERVICE} --force-new-deployment", returnStdout: true)
                }
               }
             }

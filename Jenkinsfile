@@ -4,11 +4,10 @@ pipeline {
         AWS_ECR_REGION = 'eu-west-3'
         AWS_ECR_URL = '466897917695.dkr.ecr.eu-west-3.amazonaws.com/python-flask-app-production-ecr'
         AWS_ECS_SERVICE = 'python-flask-app-production-ecs-service'
-        AWS_ECS_TASK_DEFINITION = 'python-flask-app-task'
         AWS_ECS_CLUSTER = 'python-flask-app-production-cluster'
     }
     stages {
-        stage('Build & Test') {
+        stage('Test') {
             agent {
                 dockerfile {
                     filename 'Dockerfile.build'
@@ -50,7 +49,9 @@ pipeline {
             steps {
               script {
                 withAWS(region: "${AWS_ECR_REGION}", credentials: 'aws_ecr') {
-                  sh("aws ecs update-service --cluster ${AWS_ECS_CLUSTER} --service ${AWS_ECS_SERVICE} --force-new-deployment")
+                  def updateService = "aws ecs update-service --cluster ${AWS_ECS_CLUSTER} --service ${AWS_ECS_SERVICE} --force-new-deployment"
+                  def runUpdateService = sh(returnStdout: true, script: updateService)
+                  // sh("aws ecs update-service --cluster ${AWS_ECS_CLUSTER} --service ${AWS_ECS_SERVICE} --force-new-deployment")
                }
               }
             }

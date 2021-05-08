@@ -9,9 +9,7 @@ pipeline {
     stages {
         stage('Test') {
             agent {
-                dockerfile {
-                    filename 'Dockerfile.build'
-                }
+              docker 'sinist3r/python-alpine-flask'
             }
             steps {
                 sh 'python tests.py'

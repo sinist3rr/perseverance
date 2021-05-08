@@ -1,4 +1,5 @@
 import requests
+import os
 from random import choice
 from flask import Flask, render_template
 
@@ -7,7 +8,7 @@ app = Flask(__name__)
 
 rover_url = 'https://api.nasa.gov/mars-photos/api/v1/rovers/perseverance/photos'  # noqa: E501
 CAM = 'EDL_PUCAM1'
-API_KEY = 'rC67gPuZP85lEBlsiS7VhIz2fhMp1YLEmL54EDwe'
+API_KEY = os.getenv('API_KEY')
 
 with open('img_urls.txt') as f:
     CHERRY_PICKS = f.read().splitlines()

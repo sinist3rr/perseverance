@@ -5,6 +5,7 @@ pipeline {
         AWS_ECR_URL = '466897917695.dkr.ecr.eu-west-3.amazonaws.com/python-flask-app-production-ecr'
         AWS_ECS_SERVICE = 'python-flask-app-production-ecs-service'
         AWS_ECS_CLUSTER = 'python-flask-app-production-cluster'
+        API_KEY = credentials('nasa_api_key')
     }
     stages {
         stage('Test') {

@@ -1,9 +1,5 @@
 pipeline {
     agent none
-    parameters {
-    password (name: 'AWS_ACCESS_KEY_ID')
-    password (name: 'AWS_SECRET_ACCESS_KEY')
-    }
     environment {
         AWS_ECR_REGION = 'eu-west-3'
         AWS_ECR_URL = '466897917695.dkr.ecr.eu-west-3.amazonaws.com/python-flask-app-production-ecr'

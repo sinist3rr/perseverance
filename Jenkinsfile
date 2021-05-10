@@ -8,15 +8,15 @@ pipeline {
         API_KEY = credentials('nasa_api_key')
         TF_WORKSPACE = 'dev' //Sets the Terraform Workspace
         TF_IN_AUTOMATION = 'true'
-        AWS_ACCESS_KEY_ID = "${params.AWS_ACCESS_KEY_ID}"
-        AWS_SECRET_ACCESS_KEY = "${params.AWS_SECRET_ACCESS_KEY}"
     }
     stages {
         stage('Terraform Init') {
            agent any
            steps {
-               dir("${env.WORKSPACE}/terraform"){
-                   sh "/usr/local/bin/terraform init -input=false"
+               withAWS(credentials: 'aws_terraform') {
+                  dir("${env.WORKSPACE}/terraform"){
+                      sh "/usr/local/bin/terraform init -input=false"
+                  }
                }
            }
         }

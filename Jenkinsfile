@@ -14,7 +14,9 @@ pipeline {
            steps {
                withAWS(credentials: 'aws_terraform') {
                   dir("${env.WORKSPACE}/terraform"){
-                      sh "/usr/local/bin/terraform init -input=false"
+                      ansiColor('xterm') {
+                          sh "/usr/local/bin/terraform init -input=false"
+                      }
                   }
                }
            }
@@ -22,8 +24,12 @@ pipeline {
         stage('Terraform Plan') {
            agent any
            steps {
-               dir("${env.WORKSPACE}/terraform"){
-                   sh "/usr/local/bin/terraform plan -out=tfplan -input=false -var-file='dev.tfvars'"
+               withAWS(credentials: 'aws_terraform') {
+                  dir("${env.WORKSPACE}/terraform"){
+                      ansiColor('xterm') {
+                          sh "/usr/local/bin/terraform plan -out=tfplan -input=false -var-file='dev.tfvars'"
+                      }
+                 }
                }
            }
         }

@@ -6,6 +6,7 @@ pipeline {
         AWS_ECS_SERVICE = 'python-flask-app-production-ecs-service'
         AWS_ECS_CLUSTER = 'python-flask-app-production-cluster'
         API_KEY = credentials('nasa_api_key')
+        TERRAFORM_PATH = '/usr/local/bin/terraform'
         TF_IN_AUTOMATION = 'true'
         TF_VAR_nasa_api_key = credentials('nasa_api_key')
     }
@@ -16,7 +17,7 @@ pipeline {
                withAWS(credentials: 'aws_terraform') {
                   dir("${env.WORKSPACE}/terraform"){
                       ansiColor('xterm') {
-                          sh "/usr/local/bin/terraform init -input=false"
+                          sh "${TERRAFORM_PATH} init -input=false"
                       }
                   }
                }
@@ -28,7 +29,20 @@ pipeline {
                withAWS(credentials: 'aws_terraform') {
                   dir("${env.WORKSPACE}/terraform"){
                       ansiColor('xterm') {
-                          sh "/usr/local/bin/terraform plan -out=tfplan -input=false -var-file='dev.tfvars'"
+                          sh "${TERRAFORM_PATH} plan -out=tfplan -input=false -var-file='dev.tfvars'"
+                      }
+                 }
+               }
+           }
+        }
+        stage('Terraform Apply') {
+           agent any
+           steps {
+               input 'Apply Plan'
+               withAWS(credentials: 'aws_terraform') {
+                  dir("${env.WORKSPACE}/terraform"){
+                      ansiColor('xterm') {
+                          sh "${TERRAFORM_PATH} apply -input=false tfplan"
                       }
                  }
                }

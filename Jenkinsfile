@@ -7,6 +7,7 @@ pipeline {
         AWS_ECS_CLUSTER = 'python-flask-app-production-cluster'
         API_KEY = credentials('nasa_api_key')
         TF_IN_AUTOMATION = 'true'
+        TF_VAR_nasa_api_key = "${API_KEY}"
     }
     stages {
         stage('Terraform Init') {

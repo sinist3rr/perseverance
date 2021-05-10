@@ -20,14 +20,14 @@ pipeline {
            agent any
            steps {
                sh "cd terraform/"
-               sh "terraform init -input=false"
+               sh "/usr/local/bin/terraform init -input=false"
            }
         }
         stage('Terraform Plan') {
            agent any
            steps {
                sh "cd terraform/"
-               sh "terraform plan -out=tfplan -input=false -var-file='dev.tfvars'"
+               sh "/usr/local/bin/terraform plan -out=tfplan -input=false -var-file='dev.tfvars'"
            }
         }
         stage('Test') {

@@ -6,7 +6,6 @@ pipeline {
         AWS_ECS_SERVICE = 'python-flask-app-production-ecs-service'
         AWS_ECS_CLUSTER = 'python-flask-app-production-cluster'
         API_KEY = credentials('nasa_api_key')
-        TF_WORKSPACE = 'dev' //Sets the Terraform Workspace
         TF_IN_AUTOMATION = 'true'
     }
     stages {

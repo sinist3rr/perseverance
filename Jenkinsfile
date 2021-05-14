@@ -31,6 +31,7 @@ pipeline {
                       ansiColor('xterm') {
                           sh "${TERRAFORM_PATH} plan -out=tfplan -input=false -var-file='dev.tfvars'"
                       }
+                      sh "${TERRAFORM_PATH} show -no-color tfplan > tfplan.txt"
                  }
                }
            }
@@ -98,6 +99,7 @@ pipeline {
     post {
         always {
           node('master') {
+            archiveArtifacts artifacts: 'tfplan.txt'
             cleanWs()
             sh "docker rmi ${AWS_ECR_URL}:${BUILD_NUMBER}"
             sh "docker rmi ${AWS_ECR_URL}:latest"

@@ -99,7 +99,7 @@ pipeline {
     post {
         always {
           node('master') {
-            archiveArtifacts artifacts: 'tfplan.txt'
+            archiveArtifacts artifacts: 'terraform/tfplan.txt'
             cleanWs()
             sh "docker rmi ${AWS_ECR_URL}:${BUILD_NUMBER}"
             sh "docker rmi ${AWS_ECR_URL}:latest"
